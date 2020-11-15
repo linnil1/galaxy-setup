@@ -35,6 +35,7 @@ services:
     image: linnil1/proftpd
     ports:
       - "21:21"
+      - "21000-21009:21000-21009"
     volumes:
       - ./proftpd.conf:/root/proftpd.conf:ro
       - ./certs:/certs:ro

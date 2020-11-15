@@ -1,0 +1,18 @@
+FROM alpine:latest
+
+RUN apk update && \
+    apk add git g++ make postgresql-dev openssl-dev
+
+RUN cd ~ && \
+    git clone https://github.com/proftpd/proftpd.git && \
+    cd proftpd && \
+    ./configure \
+        --disable-auth-file --disable-ncurses --disable-ident --disable-shadow \
+        --enable-openssl \
+        --with-modules=mod_sql:mod_sql_postgres:mod_sql_passwd:mod_tls && \
+    make && \
+    make install && \
+    cp /usr/local/etc/proftpd.conf /root/proftpd.conf
+
+EXPOSE 21
+CMD ["proftpd", "--nodaemon", "-c", "/root/proftpd.conf"]

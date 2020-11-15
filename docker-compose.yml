@@ -1,0 +1,67 @@
+version: "3.7"
+services:
+  postgres:
+    image: postgres:12
+    hostname: postgres
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=galaxy
+      - POSTGRES_DB=galaxy
+    volumes:
+      - /data/postgres/:/var/lib/postgresql/data:delegated
+    networks:
+      galaxy:
+        ipv4_address: 172.18.0.5
+  # The proxy server. All web-traffic is going through here, so we can
+  # offload static file serving
+  # (https://docs.galaxyproject.org/en/master/admin/production.html#using-a-proxy-server)
+  nginx:
+    # image: ${DOCKER_REGISTRY:-quay.io}/${DOCKER_REGISTRY_USERNAME:-bgruening}/galaxy-nginx:${IMAGE_TAG:-latest}
+    image: nginx:latest
+    # build: galaxy-nginx
+    ports:
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./certs:/certs:ro
+      - ./galaxy/static:/export/galaxy/static:ro
+      - ./galaxy/config/plugins:/galaxy/config/plugins:ro
+    networks:
+      - galaxy
+    extra_hosts:
+      - "galaxy-server:192.168.208.203"
+
+  proftpd:
+    image: linnil1/proftpd
+    ports:
+      - "21:21"
+    volumes:
+      - ./proftpd.conf:/root/proftpd.conf:ro
+      - ./certs:/certs:ro
+      - /datahdd/ftp:/ftp
+    networks:
+      galaxy:
+        ipv4_address: 172.18.0.3
+    extra_hosts:
+      - "galaxy-server:192.168.208.203"
+
+  rabbitmq:
+    image: rabbitmq:alpine
+    container_name: galaxy-rabbitmq
+    hostname: rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=galaxy
+      - RABBITMQ_DEFAULT_PASS=password
+      - RABBITMQ_DEFAULT_VHOST=galaxy
+    volumes:
+      - /data/rabbitmq:/var/lib/rabbitmq:delegated
+    networks:
+      galaxy:
+        ipv4_address: 172.18.0.6
+
+networks:
+  galaxy:
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.18.0.0/16

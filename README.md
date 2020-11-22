@@ -37,6 +37,11 @@ Change `galaxy.yml` to mention your user that they can upload files via ftp by t
 ```
   ftp_upload_site: 140.112.x.x:21
 ```
+and `proftpd.conf`
+```
+PassivePorts 21000 21009
+MasqueradeAddress	140.112.x.x
+```
 
 I run galaxy on only one computer, change the slots number to indicate the number of cpu your machine have.
 see more in  https://docs.galaxyproject.org/en/latest/admin/jobs.html.

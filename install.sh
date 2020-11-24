@@ -39,6 +39,13 @@ curl -s -L "https://repo.anaconda.com/miniconda/Miniconda2-latest-Linux-x86_64.s
     conda install -y virtualenv pip ephemeris && \
     rm miniconda.sh
 
+# Install Basic
+conda activate
+conda update conda --force
+conda remove -y PyYAML
+conda install -y python:3 requests
+pip3 install -U boltons packaging
+
 # certification
 # mkdir certs
 # openssl genrsa 4096 > certs/privkey.pem

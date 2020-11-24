@@ -12,11 +12,8 @@ services:
     networks:
       galaxy:
         ipv4_address: 172.18.0.5
-  # The proxy server. All web-traffic is going through here, so we can
-  # offload static file serving
-  # (https://docs.galaxyproject.org/en/master/admin/production.html#using-a-proxy-server)
+
   nginx:
-    # image: ${DOCKER_REGISTRY:-quay.io}/${DOCKER_REGISTRY_USERNAME:-bgruening}/galaxy-nginx:${IMAGE_TAG:-latest}
     image: nginx:latest
     # build: galaxy-nginx
     ports:

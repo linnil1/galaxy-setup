@@ -61,7 +61,7 @@ bash install.sh
 Main program
 ```
 cd galaxy
-sh run.sh
+sh run.sh --skip-venv
 cd ..
 ```
 

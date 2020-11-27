@@ -36,7 +36,7 @@ services:
     volumes:
       - ./proftpd.conf:/root/proftpd.conf:ro
       - ./certs:/certs:ro
-      - /datahdd/ftp:/ftp
+      - /datahdd/ftp:/datahdd/ftp
     networks:
       galaxy:
         ipv4_address: 172.18.0.3

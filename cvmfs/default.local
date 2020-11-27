@@ -1,0 +1,3 @@
+CVMFS_HTTP_PROXY="DIRECT"
+CVMFS_QUOTA_LIMIT="4000"    # the cache size in MB
+CVMFS_USE_GEOAPI=yes        # sort server list by geographic distance from client

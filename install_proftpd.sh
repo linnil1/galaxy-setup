@@ -1,3 +1,4 @@
+# Build proftpd
 sudo apt update -y
 sudo apt install -y git make libpq-dev libssl-dev build-essential
 git clone https://github.com/proftpd/proftpd.git
@@ -9,6 +10,9 @@ cd proftpd
 make -j4
 sudo make install
 cd ..
+
+# copy configuration
 sudo cp proftpd.conf /usr/local/etc/proftpd.conf
+
 # start
 sudo proftpd

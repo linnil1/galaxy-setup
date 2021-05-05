@@ -1,11 +1,23 @@
 <?xml version="1.0"?>
 <job_conf>
-    <plugins>
-        <plugin id="local" type="runner" load="galaxy.jobs.runners.local:LocalJobRunner" workers="4"/>
-    </plugins>
-    <destinations default="local">
-        <destination id="local" runner="local">
-            <param id="local_slots">4</param>
-        </destination>
-    </destinations>
+  <plugins>
+    <plugin id="local" type="runner" load="galaxy.jobs.runners.local:LocalJobRunner" workers="4"/>
+    <plugin id="cli"   type="runner" load="galaxy.jobs.runners.cli:ShellJobRunner"/>
+  </plugins>
+
+  <destinations default="local">
+    <destination id="local" runner="local">
+      <param id="local_slots">4</param>
+    </destination>
+
+    <destination id="pbs_basic" runner="cli">
+      <param id="job_plugin">SlurmTorque</param>
+      <param id="job_destination">worker</param>
+      <param id="job_Resource_List">walltime=168:00:00,select=1:ncpus=8:mem=50gb:vmem=50gb</param>
+    </destination>
+  </destinations>
+
+  <tools>
+    <tool id="bowtie2" destination="local"/>
+  </tools>
 </job_conf>

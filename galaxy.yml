@@ -22,7 +22,7 @@ uwsgi:
   # localhost (galaxy will not be accessible over the network).  Use
   # ':8080' to listen on all available network interfaces.
   # http: 0.0.0.0:8080
-  socket: 0.0.0.0:5555
+  socket: 127.0.0.1:5555
 
   # By default uWSGI allocates a very small buffer (4096 bytes) for the
   # headers of each request. If you start receiving "invalid request
@@ -131,7 +131,7 @@ galaxy:
   # string to specify an external database instead.
   # Sample default
   # 'sqlite:///<data_dir>/universe.sqlite?isolation_level=IMMEDIATE'
-  database_connection: postgresql://galaxy:password@172.18.0.5/galaxy
+  database_connection: postgresql://galaxy:galaxy@172.18.0.5/galaxy
 
   # If the server logs errors about not having enough database pool
   # connections, you will want to increase these values, or consider
@@ -372,18 +372,18 @@ galaxy:
   # won't fail to load Galaxy if it is not and 'polling' which will use
   # a less efficient monitoring scheme that may work in wider range of
   # scenarios than the watchdog default.
-  #watch_tools: 'false'
+  watch_tools: 'true'
 
   # Monitor dynamic job rules. If changes are found, rules are
   # automatically reloaded. Takes the same values as the 'watch_tools'
   # option.
-  #watch_job_rules: 'false'
+  watch_job_rules: 'true'
 
   # Monitor a subset of options in the core configuration file (See
   # RELOADABLE_CONFIG_OPTIONS in lib/galaxy/config/__init__.py).  If
   # changes are found, modified options are automatically reloaded.
   # Takes the same values as the 'watch_tools' option.
-  #watch_core_config: 'false'
+  watch_core_config: 'true'
 
   # Monitor the interactive tours directory specified in the
   # 'tour_config_dir' option. If changes are found, modified tours are
@@ -488,7 +488,7 @@ galaxy:
   # won't fail to load Galaxy if it is not and 'polling' which will use
   # a less efficient monitoring scheme that may work in wider range of
   # scenarios than the watchdog default.
-  #watch_tool_data_dir: 'false'
+  watch_tool_data_dir: 'true'
 
   # File containing refgenie configuration, e.g.
   # /path/to/genome_config.yaml. Can be used by refgenie backed tool
@@ -1635,7 +1635,7 @@ galaxy:
 
   # Set to false to prevent Galaxy from deleting uploaded FTP files as
   # it imports them.
-  #ftp_upload_purge: true
+  ftp_upload_purge: true
 
   # Enable enforcement of quotas.  Quotas can be set from the Admin
   # interface.
@@ -1985,7 +1985,7 @@ galaxy:
   # either, Galaxy will automatically create and use a separate sqlite
   # database located in your <galaxy>/database folder (indicated in the
   # commented out line below).
-  amqp_internal_connection: amqp://galaxy:password@172.18.0.6/galaxy
+  amqp_internal_connection: amqp://galaxy:galaxy@172.18.0.6/galaxy
 
   # Galaxy real time communication server settings
   #enable_communication_server: false

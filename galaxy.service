@@ -1,0 +1,13 @@
+[Unit]
+Description=Galaxy service
+
+[Service]
+Type=simple
+Restart=always
+RestartSec=1s
+User=galaxy2
+WorkingDirectory=/home/ubuntu/galaxy/
+ExecStart=/bin/bash -c '. "$0" && exec "$@"' /home/ubuntu/.bashrc /home/ubuntu/conda/bin/uwsgi --yaml /home/ubuntu/galaxy/config/galaxy.yml --static-safe /home/ubuntu/galaxy/client/src/assets
+
+[Install]
+WantedBy=multi-user.target

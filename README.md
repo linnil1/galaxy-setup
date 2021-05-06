@@ -1,5 +1,4 @@
 # Setup GALAXY server
-
 I tested on Ubuntu 20.04.
 
 ## Configuation
@@ -79,4 +78,23 @@ Run related program
 * nginx
 ```
 docker-compose up -d
+```
+
+
+After build it, we can start with uwsgi for quicker starting.
+
+```
+cd galaxy
+uwsgi --yaml /home/ubuntu/galaxy/config/galaxy.yml --static-safe /home/ubuntu/galaxy/client/src/assets
+cd ..
+```
+
+In addition, you can use systemd to handle galaxy service by providing the `.service` file.
+```
+ln -s galaxy.service /etc/systemd/system/
+sudo systemctl enable galaxy
+sudo systemctl start galaxy
+
+# restart when needed
+sudo systemctl restart galaxy
 ```
